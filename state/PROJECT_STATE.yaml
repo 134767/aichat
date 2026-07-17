@@ -1,23 +1,46 @@
 cloud_director_mode: 3.5
 control_repository: 134767/aichat
 control_branch: main
-active_task_id: CD35-LCS-2.2.0-ISOLATED-RUNTIME-DEPLOY-VERIFY-001
+active_task_id: CD35-LCS-2.2.0-AICHAT-PAGES-RUNTIME-MATRIX-002
 active_task_path: inbox/CURRENT_TASK.md
 active_executor: Codex
 report_path: outbox/CODEX_REPORT.md
 state: DISPATCHED
+previous_task:
+  task_id: CD35-LCS-2.2.0-ISOLATED-RUNTIME-DEPLOY-VERIFY-001
+  status: PARTIAL
+  report_commit: 0eeae427c724160570b8fc34b7f6799d3be6f6a4
+  verified:
+    gas_anonymous_http_200: true
+    gas_execute_as_deployer: true
+    gas_script_properties: true
+    allowed_origin_exact: true
+    isolated_sheet_private: true
+    sheet_schema: true
+    static_tests: 4/4
+    credential_scan: true
+  blockers:
+    - no_origin_valid_branch_preview
+    - exact_shared_account_email_unresolved
 verified_target:
   repository: 134767/test
   branch: feature/lcs-2.2.0-isolated-runtime-auth-bridge
+  head_sha: 58e7dae27c039096969ed43778d72378c530600f
   draft_pr: 3
+  pr_draft: true
   pr_merged: false
-  gas_exec_url: https://script.google.com/macros/s/AKfycbxZo4FnF-DUJ66fTDKC2F6VQQ8WVA6G5UyBGNlcoKeTJlEehVob5mK1ZPVfcNdfnlfYjg/exec
+  gas_exec_url_public: https://script.google.com/macros/s/AKfycbxZo4FnF-DUJ66fTDKC2F6VQQ8WVA6G5UyBGNlcoKeTJlEehVob5mK1ZPVfcNdfnlfYjg/exec
   oauth_web_client_id_public: 969836734244-25r4usq6vv9b6vd70u2q623fmehcb55a.apps.googleusercontent.com
   isolated_sheet_title: LCS 2.2.0 Isolated Runtime Test DB
   isolated_sheet_tab: timestamp_log
+preview_strategy:
+  repository: 134767/aichat
+  expected_url: https://134767.github.io/aichat/
+  pinned_target_sha: 58e7dae27c039096969ed43778d72378c530600f
+  production_test_pages_unchanged: true
 security:
   repository_public: true
   secrets_allowed: false
   target_main_direct_edit: false
   target_pr_merge_authorized: false
-next_gate: Codex writes outbox/CODEX_REPORT.md with runtime and deployment evidence
+next_gate: Codex deploys the pinned frontend through aichat Pages and returns primary, incognito, 10/25/100 stress, and Sheet-integrity evidence
