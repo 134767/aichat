@@ -28,7 +28,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: 134767/test
-          ref: aa24feb597878c53608560ed1d078018c416b218
+          ref: 5583a121305faa2e39b46d04ca6da9c76dead44f
           path: target
           persist-credentials: false
 
