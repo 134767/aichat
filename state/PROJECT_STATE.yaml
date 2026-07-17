@@ -1,14 +1,15 @@
 cloud_director_mode: 3.5
 control_repository: 134767/aichat
 control_branch: main
-active_task_id: CD35-LCS-2.2.0-EPHEMERAL-UNAUTH-GATE-003
+active_task_id: NONE
 active_task_path: inbox/CURRENT_TASK.md
-active_executor: Codex
+active_executor: NONE
 report_path: outbox/CODEX_REPORT.md
-state: DISPATCHED
+state: CORE_VALIDATION_COMPLETE_EXTERNAL_MATRIX_PENDING
 verified_control_report:
-  commit: 58ac254c03b8137ade1e590d040e44cd2a4c9cd0
-  status: ACCEPTED_PARTIAL
+  task_id: CD35-LCS-2.2.0-EPHEMERAL-UNAUTH-GATE-003
+  commit: afa8de077db42f1d16c6c1fac13145ed3dc72bae
+  status: ACCEPTED_COMPLETE
 verified_target:
   repository: 134767/test
   branch: feature/lcs-2.2.0-isolated-runtime-auth-bridge
@@ -21,6 +22,8 @@ verified_preview:
   url: https://134767.github.io/aichat/
   deployed_target_sha: 1db7ba259170ec1b70a07c99908a515d64d03573
   pages: PASS
+  clean_context_console_errors: 0
+  unexpected_network_failures: 0
 verified_runtime:
   gas_runtime: PASS
   isolated_sheet_private: PASS
@@ -41,6 +44,15 @@ verified_stress:
   p50_ms: 2933.7
   p95_ms: 5105.4
   max_ms: 5621
+verified_unauthenticated_gate:
+  fresh_context: PASS
+  sign_in_control_visible: true
+  write_button_disabled: true
+  protected_data_exposed: false
+  application_auth_persistence: NONE
+  missing_token_rejected: PASS
+  malformed_token_rejected: PASS
+  sheet_row_delta: 0
 verified_defect_fixes:
   - GAS_WRAPPER_RELAY
   - WRITE_PAYLOAD_CLIENT_SEQUENCE_CONTRACT
@@ -49,10 +61,8 @@ security:
   secrets_allowed: false
   target_main_direct_edit: false
   target_pr_merge_authorized: false
-remaining_core_gate:
-  - FRESH_UNAUTHENTICATED_BROWSER_CONTEXT
-external_matrix_blockers:
-  - MISSING_EXACT_SHARED_ACCOUNT_EMAIL
-  - NO_EXISTING_VALID_UNAUTHORIZED_ACCOUNT_PROFILE
-  - MISSING_EDITABLE_GOOGLE_SITES_TARGET
-next_gate: Codex executes task 003 fresh unauthenticated gate and writes outbox/CODEX_REPORT.md
+external_matrix_pending:
+  - EXACT_SHARED_ACCOUNT_TEST
+  - VALID_UNAUTHORIZED_ACCOUNT_TEST
+  - GOOGLE_SITES_EMBED_TEST
+next_gate: WAIT_FOR_EXTERNAL_TEST_SURFACES_OR_OWNER_MERGE_DECISION
