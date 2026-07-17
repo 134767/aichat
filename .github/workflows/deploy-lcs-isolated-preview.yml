@@ -53,6 +53,11 @@ jobs:
           cp -R target/js _site/js
           touch _site/.nojekyll
 
+          # Prevent Chrome's implicit origin-root /favicon.ico request from
+          # creating a preview-only 404 without changing the target source.
+          sed -i '/<title>/i\  <link rel="icon" href="data:,">' _site/index.html
+          grep -Fq '<link rel="icon" href="data:,">' _site/index.html
+
           test ! -e _site/gas-lcs-2.2.0-isolated
           test ! -e _site/tests
           test ! -e _site/inbox
