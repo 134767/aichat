@@ -1,91 +1,42 @@
 # Codex execution report
 
 ```yaml
-task_id: CD35-LCS-2.2.0-AICHAT-PAGES-RUNTIME-MATRIX-002
-status: PARTIAL
-control_task_sha: 5255a5842f946d7f2055f28e1be70a23f366f02b
-previous_report_commit: 0eeae427c724160570b8fc34b7f6799d3be6f6a4
-preview_workflow_commit: 8c7d5147e771040e7f988160b692607c159eb164
+task_id: CD35-LCS-2.2.0-EPHEMERAL-UNAUTH-GATE-003
+status: COMPLETE
+control_task_sha: 65dd371d1a63f8393fcaeffb14abadc0d1e3d5d6
 preview_url: https://134767.github.io/aichat/
-preview_deployed_target_sha: 1db7ba259170ec1b70a07c99908a515d64d03573
-preview_pages: PASS
-preview_console_errors: 10
-target_start_sha: 58e7dae27c039096969ed43778d72378c530600f
-target_final_sha: 1db7ba259170ec1b70a07c99908a515d64d03573
+preview_target_sha: 1db7ba259170ec1b70a07c99908a515d64d03573
+fresh_context_method: "Newly launched Chrome process with a task-created Playwright browser.newContext(), no supplied storage state"
+fresh_context: PASS
+sign_in_control_visible: true
+write_button_disabled: true
+protected_data_exposed: false
+storage_persistence: PASS
+missing_token_rejected: PASS
+malformed_token_rejected: PASS
+sheet_row_delta: 0
+new_application_console_errors: 0
+new_unexpected_network_failures: 0
+primary_and_stress_baseline_retained: PASS
 target_pr_draft: true
 target_pr_merged: false
-static_tests: 5/5
-credential_scan: PASS
-gas_runtime: PASS
-isolated_sheet_private: PASS
-primary_account:
-  auth: PASS
-  read: PASS
-  single_write: PASS
-  row_delta: 1
-  display_matches_sheet: PASS
-incognito_unauthenticated:
-  protected_data_exposed: NOT_RUN
-  write_enabled: NOT_RUN
-  row_delta: NOT_RUN
-shared_account: BLOCKED
-unauthorized_account: BLOCKED
-reload_account_switch: BLOCKED
-stress_10:
-  successful: 10
-  failed: 0
-  row_delta: 10
-stress_25:
-  successful: 25
-  failed: 0
-  row_delta: 25
-stress_100:
-  successful: 100
-  failed: 0
-  row_delta: 100
-missing_rows: 0
-duplicate_ids: 0
-duplicate_request_ids: 0
-frontend_max_in_flight: 10
-latency_ms:
-  p50: 2933.7
-  p95: 5105.4
-  max: 5621
-saturation_point: NONE
-sheet_integrity: PASS
-google_sites_embed: BLOCKED
-commits:
-  - repository: 134767/aichat
-    sha: 8c7d5147e771040e7f988160b692607c159eb164
-    message: "ci: deploy isolated LCS preview from pinned target SHA"
-  - repository: 134767/aichat
-    sha: 1716b014fc2bdd593c0cff1af6494ec4ffbec5cf
-    message: "ci: deploy write payload contract fix"
-  - repository: 134767/test
-    sha: 9654e71a03b7f0d623aaaba70c38e82f4a5a4347
-    message: "fix: relay GAS bridge through Apps Script wrapper"
-  - repository: 134767/test
-    sha: 5583a121305faa2e39b46d04ca6da9c76dead44f
-    message: "fix: bust cached isolated runtime bundle"
-  - repository: 134767/test
-    sha: 1db7ba259170ec1b70a07c99908a515d64d03573
-    message: "fix: map write payload to backend contract"
-blockers:
-  - BLOCKED_NO_INCOGNITO_BROWSER_SURFACE
+pr_body_updated: true
+pr_comment_url: https://github.com/134767/test/pull/3#issuecomment-5001638969
+external_blockers:
   - BLOCKED_MISSING_EXACT_SHARED_EMAIL
   - BLOCKED_NO_EXISTING_UNAUTHORIZED_PROFILE
   - BLOCKED_MISSING_EDITABLE_SITES_TARGET
-next_recommended_action: "Provide an incognito browser surface, then rerun the pre-sign-in gate against the existing preview without changing or merging PR #3."
+next_recommended_action: "Keep PR #3 Draft and obtain the three remaining external test surfaces before any merge decision."
 ```
 
 ## Outcome
 
-GitHub Pages deployment run [29564616027](https://github.com/134767/aichat/actions/runs/29564616027) completed successfully and serves the pinned target revision. The authorized primary-account path passed authentication, initial read, one write, and persisted-display verification.
+The focused task-003 completion gate passed. A newly launched Chrome process created a new Playwright browser context with no supplied storage state. Before navigation it contained zero Google session cookies. The context showed the Google sign-in control, exposed no protected timestamp, provided no enabled write button, and stored no application authentication state in local storage, session storage, IndexedDB, cookies, or the URL.
 
-The exact stress phases completed with 10/10, 25/25, and 100/100 successful writes. The Sheet gained exactly 136 rows including the primary write; generated IDs and request IDs were unique, client sequence was contiguous from 1 through 136, and server timestamps were nondecreasing. No saturation or new write error occurred.
+Two negative requests were sent through the deployed preview/bridge contract without changing origin or authentication validation. The missing token was rejected with the normalized required-token result, and a deliberately malformed non-secret dummy token was rejected with the normalized invalid-token result. Neither returned a protected record. Authorized read-only Sheet counts were 157 before and 157 after, for a zero-row delta.
 
-The status is `PARTIAL` solely because the required incognito-before-sign-in core gate could not be run on the available Chrome surface. The shared-account, unauthorized-account, and Google Sites rows remain explicit external blockers. PR #3 remains Draft, open, and unmerged.
+The first fresh-context diagnostic exposed a preview-only `/favicon.ico` 404. The target source remained unchanged. Control commit `a218e75955cd8e7f874a4fe213f71b1b2d94b2b4` injects a data favicon only into the Pages artifact; deployment run [29570857526](https://github.com/134767/aichat/actions/runs/29570857526) passed. The final clean-context run then recorded zero application console errors and zero unexpected network failures. Expected Google Identity/FedCM informational messages and the two intentional backend rejections were categorized separately.
 
-The ten recorded console errors are session-level diagnostics accumulated across cache/remediation cycles, including Google identity/FedCM noise and two preserved pre-fix validation failures. The final cache-busted build produced 136 successful write metrics and zero new write failures.
+The accepted primary-account, stress, and Sheet-integrity evidence from task 002 was not rerun or altered. Target revision `1db7ba259170ec1b70a07c99908a515d64d03573` remained clean. PR #3's description and one concise task-003 evidence comment were updated, while the PR stayed Draft, open, and unmerged.
 
-No credential, token, private deployment identifier, Spreadsheet ID, Script ID, OAuth client identifier, or account subject is included in this report or its evidence.
+No private identifier, credential, token, cookie value, account subject, Spreadsheet ID, Script ID, deployment ID, or browser profile data is included in this report or its evidence.
