@@ -1,197 +1,50 @@
-# ACTIVE TASK PACKET
+# NO ACTIVE CONSTRUCTION TASK
 
 ```yaml
-task_id: CD35-LCS-2.2.0-EPHEMERAL-UNAUTH-GATE-003
 mode: CLOUD_DIRECTOR_3_5
-issuer: ChatGPT Cloud Director
-executor: Codex
-priority: P0
-status: READY
-control_repository: 134767/aichat
+status: HOLD
+executor: NONE
+last_completed_task: CD35-LCS-2.2.0-EPHEMERAL-UNAUTH-GATE-003
+accepted_report_commit: afa8de077db42f1d16c6c1fac13145ed3dc72bae
 target_repository: 134767/test
 target_branch: feature/lcs-2.2.0-isolated-runtime-auth-bridge
-target_expected_sha: 1db7ba259170ec1b70a07c99908a515d64d03573
+target_head_sha: 1db7ba259170ec1b70a07c99908a515d64d03573
 target_pr: 3
+target_pr_state: DRAFT_OPEN_UNMERGED
 preview_url: https://134767.github.io/aichat/
-previous_report_commit: 58ac254c03b8137ade1e590d040e44cd2a4c9cd0
 ```
 
-## Objective
+## Accepted validation baseline
 
-Close the only missing core security gate by testing the existing deployed preview in a genuinely fresh browser context with no Google session, cookies, cache, local storage, session storage, IndexedDB, or reused profile state.
-
-Do not rerun the 10/25/100 stress matrix. Preserve the accepted evidence from task 002.
-
-## Accepted baseline
-
-- Primary authorized auth/read/write: PASS.
+- OAuth, GAS deployment, Script Properties, and private isolated Sheet: PASS.
+- Primary authorized authentication, read, single write, and persisted display: PASS.
 - Stress writes: 10/10, 25/25, 100/100.
-- Task-created Sheet rows: 136.
 - Missing rows: 0.
 - Duplicate IDs: 0.
 - Duplicate request IDs: 0.
-- Client sequence: contiguous 1–136.
-- PR #3 remains Draft, open, unmerged.
-- Target SHA: `1db7ba259170ec1b70a07c99908a515d64d03573`.
+- Fresh unauthenticated browser context: PASS.
+- Protected data before sign-in: none.
+- Write before sign-in: disabled.
+- Missing token: rejected.
+- Malformed token: rejected.
+- Unauthenticated Sheet row delta: 0.
+- Final fresh-context application console errors: 0.
+- Final unexpected network failures: 0.
 
-## Non-negotiable constraints
+## External matrix pending
 
-- Never merge PR #3.
-- Never modify target `main`.
-- Never force push.
-- Never expose or commit private identifiers, tokens, cookies, credentials, account subjects, Spreadsheet ID, Script ID, deployment ID, `.clasp.json`, or browser profile data.
-- Do not use the currently authenticated browser profile for the unauthenticated test.
-- Do not call a missing test surface `PASS`.
-- Do not rerun high-volume writes.
-- Do not change target source unless the fresh-context test proves a real defect.
+No Codex action is authorized until Cloud Director replaces this file.
 
-## Required fresh browser surface
+Pending external surfaces:
 
-Use the first available real isolation mechanism:
+- Exact shared operational Google account.
+- Valid Google account absent from the allowlist.
+- Editable Google Sites embedding target.
 
-1. Playwright/Chromium `browser.newContext()` with a temporary profile and no stored state.
-2. Chromium/Chrome launched with a newly created temporary `--user-data-dir` and no account sign-in.
-3. Native Incognito window opened through an available browser-control surface.
+## Constraints retained
 
-The context must be newly created for this task and deleted after evidence capture.
-
-## Test A — Pre-sign-in frontend gate
-
-Open `https://134767.github.io/aichat/` in the fresh context.
-
-Required evidence:
-
-```yaml
-fresh_context: true
-google_session_present: false
-sign_in_control_visible: true
-write_button_enabled: false
-protected_timestamp_displayed: false
-local_storage_entries: 0
-session_storage_entries: 0
-indexeddb_auth_records: 0
-application_auth_cookies: 0
-token_in_url: false
-```
-
-Google/FedCM provider cookies outside application ownership must not be misreported as application token persistence. Record exact observations without copying cookie values.
-
-## Test B — Sheet zero-delta proof
-
-Before opening the fresh context, record the isolated Sheet data-row count through an authorized read-only method without exposing private identifiers.
-
-After the complete unauthenticated session, record it again.
-
-Required:
-
-```yaml
-unauthenticated_sheet_row_delta: 0
-```
-
-No manual cleanup may be used to manufacture zero delta.
-
-## Test C — Backend fail-closed proof
-
-Through the deployed preview/bridge contract, prove both cases are rejected without creating rows:
-
-1. Missing ID Token.
-2. Deliberately malformed non-secret dummy token.
-
-Acceptable results include the application’s normalized authentication failure code. Do not use any real token in evidence.
-
-Required:
-
-```yaml
-missing_token_rejected: true
-malformed_token_rejected: true
-protected_record_returned: false
-backend_negative_test_row_delta: 0
-```
-
-Do not weaken origin validation or authentication code to perform this test.
-
-## Test D — Fresh final-build console/network check
-
-Capture only the newly created context, not historical remediation sessions.
-
-Separate:
-
-- application errors
-- expected Google Identity/FedCM informational warnings
-- backend authentication rejections intentionally generated by Test C
-
-Required:
-
-```yaml
-new_application_console_errors: 0
-new_unexpected_network_failures: 0
-```
-
-Intentional 401/403-style authentication rejection evidence is not an unexpected failure.
-
-## Static and repository verification
-
-Confirm:
-
-```yaml
-aichat_pages_target_sha: 1db7ba259170ec1b70a07c99908a515d64d03573
-target_pr_draft: true
-target_pr_merged: false
-target_working_tree_clean: true
-credential_scan: PASS
-```
-
-If no target code change is required, do not create a target commit.
-
-## PR maintenance
-
-PR #3 body currently contains obsolete pending values. Update only its description so it reflects:
-
-- OAuth/GAS/Sheet configuration complete.
-- Primary authorized path PASS.
-- 10/25/100 stress PASS.
-- Sheet integrity PASS.
-- Fresh unauthenticated gate result from this task.
-- Shared-account, valid-unauthorized-account, and Google Sites tests remain external blockers when still unavailable.
-- PR remains Draft and must not be merged.
-
-Add one concise structured task-003 evidence comment.
-
-## Control report
-
-Replace `outbox/CODEX_REPORT.md` and add `evidence/unauthenticated-gate-003.md`.
-
-Top-level schema:
-
-```yaml
-task_id: CD35-LCS-2.2.0-EPHEMERAL-UNAUTH-GATE-003
-status: COMPLETE | PARTIAL | BLOCKED
-control_task_sha: <sha>
-preview_url: https://134767.github.io/aichat/
-preview_target_sha: <sha>
-fresh_context_method: <method>
-fresh_context: PASS|FAIL|NOT_RUN
-sign_in_control_visible: true|false|NOT_RUN
-write_button_disabled: true|false|NOT_RUN
-protected_data_exposed: false|true|NOT_RUN
-storage_persistence: PASS|FAIL|NOT_RUN
-missing_token_rejected: PASS|FAIL|NOT_RUN
-malformed_token_rejected: PASS|FAIL|NOT_RUN
-sheet_row_delta: <number|NOT_RUN>
-new_application_console_errors: <number|NOT_RUN>
-new_unexpected_network_failures: <number|NOT_RUN>
-primary_and_stress_baseline_retained: PASS|FAIL
-target_pr_draft: true|false
-target_pr_merged: false|true
-pr_body_updated: true|false
-pr_comment_url: <url|NOT_CREATED>
-external_blockers:
-  - <blocker or NONE>
-next_recommended_action: <one action>
-```
-
-Commit and push only the report/evidence and any control-repository Pages metadata genuinely required. Do not modify this task file or `state/PROJECT_STATE.yaml`.
-
-## Completion rule
-
-`COMPLETE` requires all fresh-context, zero-row-delta, missing-token, malformed-token, storage, and fresh-console gates to pass. Shared-account, valid unauthorized-account, and Google Sites embedding are external matrix rows and do not prevent this focused task from being COMPLETE.
+- Do not merge PR #3.
+- Do not modify target `main`.
+- Do not rerun high-volume stress tests.
+- Do not expose or commit credentials, tokens, cookies, Spreadsheet ID, Script ID, deployment ID, or browser profile data.
+- Do not modify this file or `state/PROJECT_STATE.yaml` unless a new Cloud Director task explicitly authorizes it.
