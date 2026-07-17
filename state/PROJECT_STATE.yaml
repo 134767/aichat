@@ -1,11 +1,11 @@
 cloud_director_mode: 3.5
 control_repository: 134767/aichat
 control_branch: main
-active_task_id: NONE
+active_task_id: CD35-LCS-2.2.0-PUBLIC-ACCOUNT-SITES-SHARED-MATRIX-004
 active_task_path: inbox/CURRENT_TASK.md
-active_executor: NONE
+active_executor: Codex
 report_path: outbox/CODEX_REPORT.md
-state: CORE_VALIDATION_COMPLETE_EXTERNAL_MATRIX_PENDING
+state: EXTERNAL_PUBLIC_ACCOUNT_MATRIX_DISPATCHED
 verified_control_report:
   task_id: CD35-LCS-2.2.0-EPHEMERAL-UNAUTH-GATE-003
   commit: afa8de077db42f1d16c6c1fac13145ed3dc72bae
@@ -22,47 +22,36 @@ verified_preview:
   url: https://134767.github.io/aichat/
   deployed_target_sha: 1db7ba259170ec1b70a07c99908a515d64d03573
   pages: PASS
-  clean_context_console_errors: 0
-  unexpected_network_failures: 0
 verified_runtime:
   gas_runtime: PASS
   isolated_sheet_private: PASS
   primary_auth: PASS
   primary_read: PASS
   primary_single_write: PASS
-  display_matches_sheet: PASS
 verified_stress:
   writes_10: 10/10
   writes_25: 25/25
   writes_100: 100/100
-  total_task_rows: 136
   missing_rows: 0
   duplicate_ids: 0
   duplicate_request_ids: 0
-  client_sequence: 1-136_CONTIGUOUS
-  saturation_point: NONE
-  p50_ms: 2933.7
-  p95_ms: 5105.4
-  max_ms: 5621
 verified_unauthenticated_gate:
   fresh_context: PASS
-  sign_in_control_visible: true
-  write_button_disabled: true
   protected_data_exposed: false
-  application_auth_persistence: NONE
+  write_button_disabled: true
   missing_token_rejected: PASS
   malformed_token_rejected: PASS
   sheet_row_delta: 0
-verified_defect_fixes:
-  - GAS_WRAPPER_RELAY
-  - WRITE_PAYLOAD_CLIENT_SEQUENCE_CONTRACT
 security:
+  public_google_account: fjulibrs@gmail.com
+  private_accounts_forbidden: true
   repository_public: true
   secrets_allowed: false
   target_main_direct_edit: false
   target_pr_merge_authorized: false
-external_matrix_pending:
-  - EXACT_SHARED_ACCOUNT_TEST
-  - VALID_UNAUTHORIZED_ACCOUNT_TEST
-  - GOOGLE_SITES_EMBED_TEST
-next_gate: WAIT_FOR_EXTERNAL_TEST_SURFACES_OR_OWNER_MERGE_DECISION
+active_scope:
+  - EXACT_SHARED_OPERATIONAL_ACCOUNT_RESOLUTION_FROM_FJULIBRS_ENVIRONMENT
+  - GOOGLE_SITES_EMBED_TEST_UNDER_FJULIBRS_ACCOUNT
+explicitly_deferred:
+  - VALID_UNAUTHORIZED_ACCOUNT_TEST_UNTIL_APPROVED_PUBLIC_TEST_ACCOUNT_EXISTS
+next_gate: Codex writes task 004 report and evidence without using private Google identities
