@@ -1,42 +1,34 @@
 # Codex execution report
 
 ```yaml
-task_id: CD35-LCS-2.2.0-EPHEMERAL-UNAUTH-GATE-003
-status: COMPLETE
-control_task_sha: 65dd371d1a63f8393fcaeffb14abadc0d1e3d5d6
-preview_url: https://134767.github.io/aichat/
-preview_target_sha: 1db7ba259170ec1b70a07c99908a515d64d03573
-fresh_context_method: "Newly launched Chrome process with a task-created Playwright browser.newContext(), no supplied storage state"
-fresh_context: PASS
-sign_in_control_visible: true
-write_button_disabled: true
-protected_data_exposed: false
-storage_persistence: PASS
-missing_token_rejected: PASS
-malformed_token_rejected: PASS
-sheet_row_delta: 0
-new_application_console_errors: 0
-new_unexpected_network_failures: 0
-primary_and_stress_baseline_retained: PASS
+task_id: CD35-LCS-2.2.0-PUBLIC-ACCOUNT-SITES-SHARED-MATRIX-004
+status: PARTIAL
+control_task_sha: 957c52abf50709cfd900d01d25c7e422f3711550
+public_google_account: fjulibrs@gmail.com
+shared_account_email: UNRESOLVED
+shared_account_test: BLOCKED
+google_sites_embed: PASS
+google_sites_primary_auth: PASS
+google_sites_read: PASS
+google_sites_single_write: PASS
+google_sites_row_delta: 1
+google_sites_console_errors: 0
+google_sites_network_failures: 0
+temporary_site_cleanup: DELETED
+target_head_sha: 90b298ad94193eb6059794f265224b0911159a55
 target_pr_draft: true
 target_pr_merged: false
-pr_body_updated: true
-pr_comment_url: https://github.com/134767/test/pull/3#issuecomment-5001638969
-external_blockers:
+blockers:
   - BLOCKED_MISSING_EXACT_SHARED_EMAIL
-  - BLOCKED_NO_EXISTING_UNAUTHORIZED_PROFILE
-  - BLOCKED_MISSING_EDITABLE_SITES_TARGET
-next_recommended_action: "Keep PR #3 Draft and obtain the three remaining external test surfaces before any merge decision."
+next_recommended_action: "Provide the exact intended shared operational Google account through an approved non-secret public-work source, then authorize a focused shared-account matrix run."
 ```
 
 ## Outcome
 
-The focused task-003 completion gate passed. A newly launched Chrome process created a new Playwright browser context with no supplied storage state. Before navigation it contained zero Google session cookies. The context showed the Google sign-in control, exposed no protected timestamp, provided no enabled write button, and stored no application authentication state in local storage, session storage, IndexedDB, cookies, or the URL.
+The isolated Google Sites matrix passed under the public work account. A temporary, unpublished Site embedded the existing Pages preview. The Site wrapper, embedded GitHub application, Google sign-in, initial authorized read, one write control, and timestamp status all loaded. One deliberate write increased the authorized Sheet data-row count from 157 to 158, and the timestamp rendered in the embedded UI matched the persisted server timestamp. The final write interval added zero application console errors and zero unexpected network failures. The temporary Site was moved to the public account's Drive trash after verification.
 
-Two negative requests were sent through the deployed preview/bridge contract without changing origin or authentication validation. The missing token was rejected with the normalized required-token result, and a deliberately malformed non-secret dummy token was rejected with the normalized invalid-token result. Neither returned a protected record. Authorized read-only Sheet counts were 157 before and 157 after, for a zero-row delta.
+Google Sites exposed a real nested-frame bridge defect in the accepted target revision: the GAS bridge assumed the GitHub page was its top-level window. Inside Sites, the wrapper became the top-level window, so bridge readiness could not reach the embedded GitHub page. Target commit `90b298ad94193eb6059794f265224b0911159a55` relays bridge messages only through actual ancestor windows while retaining the exact allowed GitHub origin for both inbound validation and outbound `postMessage` delivery. Contract tests, source syntax checks, GAS deployment, and the live Sites rerun passed. Control Pages deployment commit `341dc6711782733515626d1bb05fb2bb3853d23c` completed in [workflow run 29577995248](https://github.com/134767/aichat/actions/runs/29577995248).
 
-The first fresh-context diagnostic exposed a preview-only `/favicon.ico` 404. The target source remained unchanged. Control commit `a218e75955cd8e7f874a4fe213f71b1b2d94b2b4` injects a data favicon only into the Pages artifact; deployment run [29570857526](https://github.com/134767/aichat/actions/runs/29570857526) passed. The final clean-context run then recorded zero application console errors and zero unexpected network failures. Expected Google Identity/FedCM informational messages and the two intentional backend rejections were categorized separately.
+The exact shared operational account remains unresolved. Within the public work environment, the LCS database and Apps Script project were owned by `fjulibrs@gmail.com`; the visible Drive access metadata classified the inspected project as private and disclosed no collaborator email. The share dialog returned a temporary inability-to-share error before it could provide further metadata. No private identity was opened, listed, tested, or used, and no email was inferred from a display name. Therefore the required shared-account test is blocked and the overall result is `PARTIAL` under the task completion rule.
 
-The accepted primary-account, stress, and Sheet-integrity evidence from task 002 was not rerun or altered. Target revision `1db7ba259170ec1b70a07c99908a515d64d03573` remained clean. PR #3's description and one concise task-003 evidence comment were updated, while the PR stayed Draft, open, and unmerged.
-
-No private identifier, credential, token, cookie value, account subject, Spreadsheet ID, Script ID, deployment ID, or browser profile data is included in this report or its evidence.
+PR #3 remains Draft, open, and unmerged. Neither target `main` nor the accepted 10/25/100 stress baseline was changed or rerun. `inbox/CURRENT_TASK.md` and `state/PROJECT_STATE.yaml` retain their protected blob hashes. No credential, token, account subject, Spreadsheet ID, Script ID, deployment ID, Site identifier, cookie, private profile data, or private Google identity is included in this report or its evidence.
