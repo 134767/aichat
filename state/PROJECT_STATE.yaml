@@ -1,0 +1,23 @@
+cloud_director_mode: 3.5
+control_repository: 134767/aichat
+control_branch: main
+active_task_id: CD35-LCS-2.2.0-ISOLATED-RUNTIME-DEPLOY-VERIFY-001
+active_task_path: inbox/CURRENT_TASK.md
+active_executor: Codex
+report_path: outbox/CODEX_REPORT.md
+state: DISPATCHED
+verified_target:
+  repository: 134767/test
+  branch: feature/lcs-2.2.0-isolated-runtime-auth-bridge
+  draft_pr: 3
+  pr_merged: false
+  gas_exec_url: https://script.google.com/macros/s/AKfycbxZo4FnF-DUJ66fTDKC2F6VQQ8WVA6G5UyBGNlcoKeTJlEehVob5mK1ZPVfcNdfnlfYjg/exec
+  oauth_web_client_id_public: 969836734244-25r4usq6vv9b6vd70u2q623fmehcb55a.apps.googleusercontent.com
+  isolated_sheet_title: LCS 2.2.0 Isolated Runtime Test DB
+  isolated_sheet_tab: timestamp_log
+security:
+  repository_public: true
+  secrets_allowed: false
+  target_main_direct_edit: false
+  target_pr_merge_authorized: false
+next_gate: Codex writes outbox/CODEX_REPORT.md with runtime and deployment evidence
