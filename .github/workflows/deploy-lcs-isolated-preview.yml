@@ -1,0 +1,75 @@
+name: Deploy isolated LCS preview
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/deploy-lcs-isolated-preview.yml
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: lcs-isolated-preview-pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out pinned isolated runtime
+        uses: actions/checkout@v4
+        with:
+          repository: 134767/test
+          ref: 58e7dae27c039096969ed43778d72378c530600f
+          path: target
+          persist-credentials: false
+
+      - name: Build minimal preview artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -f target/index.html
+          test -f target/css/style.css
+          test -f target/js/app.js
+          test -f target/js/runtime-config.js
+          grep -Fq "googleClientId: '969836734244-25r4usq6vv9b6vd70u2q623fmehcb55a.apps.googleusercontent.com'" target/js/runtime-config.js
+          grep -Fq "gasWebAppUrl: 'https://script.google.com/macros/s/AKfycbxZo4FnF-DUJ66fTDKC2F6VQQ8WVA6G5UyBGNlcoKeTJlEehVob5mK1ZPVfcNdfnlfYjg/exec'" target/js/runtime-config.js
+          if grep -Fq 'REPLACE_WITH_' target/js/runtime-config.js; then
+            echo 'runtime-config.js contains an unresolved placeholder' >&2
+            exit 1
+          fi
+
+          mkdir -p _site
+          cp target/index.html _site/index.html
+          cp -R target/css _site/css
+          cp -R target/js _site/js
+          touch _site/.nojekyll
+
+          test ! -e _site/gas-lcs-2.2.0-isolated
+          test ! -e _site/tests
+          test ! -e _site/inbox
+          test ! -e _site/outbox
+          test ! -e _site/evidence
+          test ! -e _site/.git
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true
+
+      - name: Upload preview artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+      - name: Deploy preview
+        id: deployment
+        uses: actions/deploy-pages@v4
